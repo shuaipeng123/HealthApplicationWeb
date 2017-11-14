@@ -4,7 +4,7 @@
     "rewrites":[
       {
         "source":"**",
-        "function":"helloWorld"
+        "function":"app"
       }
     ],
     "ignore": [
