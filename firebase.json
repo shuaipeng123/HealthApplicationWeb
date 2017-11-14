@@ -3,7 +3,11 @@
     "public": "public",
     "rewrites":[
       {
-        "source":"**",
+        "source":"/timestamp",
+        "function":"app"
+      },
+      {
+        "source":"/index",
         "function":"app"
       }
     ],
