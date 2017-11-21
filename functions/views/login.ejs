@@ -48,16 +48,7 @@ License: You must have a valid license purchased only from themeforest(the above
         <!-- END THEME LAYOUT STYLES -->
         <link rel="shortcut icon" href="favicon.ico" />
         <script src="https://www.gstatic.com/firebasejs/3.1.0/firebase.js"></script>
-        <script>
-            // Initialize Firebase
-            var config = {
-                apiKey: "AIzaSyCF2s8kKdH6eG20bWfT15wGoOJEWLQoCHo",
-                authDomain: "remote-health-monitoring.firebaseapp.com",
-                databaseURL: "https://remote-health-monitoring.firebaseio.com",
-                storageBucket: "remote-health-monitoring.appspot.com",
-            };
-            firebase.initializeApp(config);
-        </script>
+
     </head>
     <!-- END HEAD -->
 
@@ -73,16 +64,16 @@ License: You must have a valid license purchased only from themeforest(the above
                     <div class="login-content">
                         <h1>Data mining system Login</h1>
                         <p> This data mining system can help your solve a lot of analysing problem.</p>
-                        <form action="/test" class="login-form" method="get">
+                        <form action="/index" class="login-form" method="post">
                             <div class="alert alert-danger display-hide">
                                 <button class="close" data-close="alert"></button>
                                 <span>Enter any username and password. </span>
                             </div>
                             <div class="row">
                                 <div class="col-xs-6">
-                                    <input class="form-control form-control-solid placeholder-no-fix form-group" type="text" autocomplete="off" placeholder="Username" name="username" required/> </div>
+                                    <input  id="txtEmail" class="form-control form-control-solid placeholder-no-fix form-group" type="text" autocomplete="off" placeholder="Username" name="txtEmail" required/> </div>
                                 <div class="col-xs-6">
-                                    <input class="form-control form-control-solid placeholder-no-fix form-group" type="password" autocomplete="off" placeholder="Password" name="password" required/> </div>
+                                    <input  id="txtPassword" class="form-control form-control-solid placeholder-no-fix form-group" type="password" autocomplete="off" placeholder="Password" name="password" required/> </div>
                             </div>
                             <div class="row">
                                 <div class="col-sm-4">
@@ -95,21 +86,26 @@ License: You must have a valid license purchased only from themeforest(the above
                                 </div>
                                 <div class="col-sm-8 text-right">
                                     <div class="forgot-password">
-                                        <a href="javascript:;" id="forget-password" class="forget-password">Forgot Password?</a>
+                                        <a href="javascript:;" id="forget-password" class="forget-password">Sign Up</a>
                                     </div>
-                                    <button class="btn green" type="submit">Sign In</button>
+
+                                    <button id="btnLogin" class="btn green" type="submit">Log In</button>
                                 </div>
                             </div>
                         </form>
                         <!-- BEGIN FORGOT PASSWORD FORM -->
-                        <form class="forget-form" action="javascript:;" method="post">
-                            <h3 class="font-green">Forgot Password ?</h3>
-                            <p> Enter your e-mail address below to reset your password. </p>
+                        <form class="forget-form" action="/index" method="post">
+                            <h3 class="font-green">Sign Up As a Physican</h3>
+
                             <div class="form-group">
-                                <input class="form-control placeholder-no-fix form-group" type="text" autocomplete="off" placeholder="Email" name="email" /> </div>
+                                <input class="form-control placeholder-no-fix form-group" type="email" autocomplete="off" placeholder="txtEmail" name="email" />
+                                <input class="form-control placeholder-no-fix form-group" type="password" autocomplete="off" placeholder="Password" name="password" />
+                                <input class="form-control placeholder-no-fix form-group" type="text" autocomplete="off" placeholder="username" name="username" />
+                                <input class="form-control placeholder-no-fix form-group" type="text" autocomplete="off" placeholder="subject" name="subject" />
+                            </div>
                             <div class="form-actions">
                                 <button type="button" id="back-btn" class="btn green btn-outline">Back</button>
-                                <button type="submit" class="btn btn-success uppercase pull-right">Submit</button>
+                                <button id="btnSignUp" type="submit" class="btn btn-success uppercase pull-right">Submit</button>
                             </div>
                         </form>
                         <!-- END FORGOT PASSWORD FORM -->
@@ -174,68 +170,38 @@ License: You must have a valid license purchased only from themeforest(the above
         <!-- BEGIN THEME LAYOUT SCRIPTS -->
         <!-- END THEME LAYOUT SCRIPTS -->
         <script>
-            (function() {
-                var app = document.querySelector('#app');
-                app.signIn = function() {
-                    var email = app.email;
-                    var password = app.password;
-                    if (!email || !password) {
-                        return console.log('email and password required');
-                    }
-                    // Sign in user
-                    firebase.auth().signInWithEmailAndPassword(email, password)
-                        .catch(function(error) {
-                            // Handle Errors here.
-                            var errorCode = error.code;
-                            var errorMessage = error.message;
-                            console.log('signIn error', error);
-                            // ...
-                        });
+            (function () {
+                var config = {
+                    apiKey: "AIzaSyCF2s8kKdH6eG20bWfT15wGoOJEWLQoCHo",
+                    authDomain: "remote-health-monitoring.firebaseapp.com",
+                    databaseURL: "https://remote-health-monitoring.firebaseio.com",
+                    storageBucket: "remote-health-monitoring.appspot.com",
                 };
-                app.register = function() {
-                    var email = app.email;
-                    var password = app.password;
-                    if (!email || !password) {
-                        return console.log('email and password required');
-                    }
-                    // Register user
-                    firebase.auth().createUserWithEmailAndPassword(email, password)
-                        .catch(function(error) {
-                            console.log('register error', error);
-                            if (error.code === 'auth/email-already-in-use') {
-                                var credential = firebase.auth.EmailAuthProvider.credential(email, password);
-                                app.signInWithGoogle()
-                                    .then(function() {
-                                        firebase.auth().currentUser.link(credential)
-                                            .then(function(user) {
-                                                console.log("Account linking success", user);
-                                            }, function(error) {
-                                                console.log("Account linking error", error);
-                                            });
-                                    });
-                            }
-                        });
-                };
-                app.signInWithGoogle = function() {
-                    // Sign in with Google
-                    var provider = new firebase.auth.GoogleAuthProvider();
-                    provider.addScope('profile');
-                    provider.addScope('email');
-                    return firebase.auth().signInWithPopup(provider)
-                        .catch(function(error) {
-                            console.log('Google sign in error', error);
-                        });
-                };
-                app.signOut = function() {
-                    // Sign out
-                    firebase.auth().signOut();
-                };
-                // Listen to auth state changes
-                firebase.auth().onAuthStateChanged(function(user) {
-                    app.user = user;
-                    console.log('user', user);
-                });
-            })();
+                firebase.initializeApp(config);
+                const txtEmail=document.getElementById('txtEmail');
+                const txtPassword=document.getElementById('txtPassword');
+                const btnLogin=document.getElementById('btnLogin');
+                const btnSignup=document.getElementById('btnSignUp');
+                const btnLogout=document.getElementById('btnLogout');
+                btnLogin.addEventListener('click',e=>{
+                    const email=txtEmail.value;
+                console.log(email);
+                const pass=txtPassword.value;
+                const auth=firebase.auth();
+                const promise=auth.signInWithEmailAndPassword(email,pass);
+                promise.catch(e=>console.log(e.message));
+
+            });
+                btnSignup.addEventListener('click',e=>{
+                    const email=txtEmail.value;
+                //console.log(email);
+                const pass=txtPassword.value;
+                const auth=firebase.auth();
+                const promise=auth.createUserWithEmailAndPassword(email,pass);
+                promise.catch(e=>console.log(e.message));
+
+            });
+            }());
         </script>
 
     </body>
