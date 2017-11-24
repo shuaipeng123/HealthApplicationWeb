@@ -88,16 +88,45 @@ app.post('/index', function (req, res, next) {
 });
 
 app.post('/pair', function (req, res, next) {
-    var family=req.body.family
+    var family_selected=req.body.family
+    var patient_selected=req.body.patient
     var name=req.body.email
     console.log("I am in pair",name)
-    res.render('dropdown.ejs', {
-        res.send('respond with a resource');
 
-    });
+
+        var patient = [];
+        var family = [];
+        messagesRef.once('value')
+            .then(function (snap) {
+                snap.forEach(function (childSnap) {
+                    console.log(childSnap.child("userType").val());
+                    var userType = childSnap.child("userType").val();
+                    var child = childSnap.val();
+                    if (userType == "PATIENT")
+                        patient.push(child.name);
+                    else if (userType == "FAMILY")
+                        family.push(child.name);
+
+                });
+                console.log(patient);
+                console.log(family);
+                res.render('dropdown.ejs', {
+                    email: name,
+                    patient: patient,
+                    family: family
+                });
+            });
+
+
+
 });
 
-
+app.get('/query2', function (req, res, next) {
+    res.render('query2Chart.ejs');
+});
+app.get('/patient', function (req, res, next) {
+    res.render('patient.ejs');
+});
 app.get('/', function (req, res, next) {
     res.render('login.ejs');
 });

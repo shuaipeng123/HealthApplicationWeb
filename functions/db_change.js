@@ -10,40 +10,87 @@ admin.initializeApp({
     databaseURL: "https://remote-health-monitoring.firebaseio.com"
 });
 
-var ref=admin.database().ref();
-var messagesRef=ref.child('users');
-messagesRef.orderByChild("email").equalTo('s@s.com').on("child_added",function (snap) {
-    console.log(snap.key);
-
-    name = snap.child('name').val();
-    console.log(name);
-    var patient=[];
-    var family=[];
-    messagesRef.once('value')
-    .then(function (snap) {
-        snap.forEach(function (childSnap) {
-            console.log(childSnap.child("userType").val());
-            var userType=childSnap.child("userType").val();
-            var child=childSnap.val();
-            if(userType=="PATIENT")
-                patient.push(child.name);
-            else if(userType=="FAMILY")
-                family.push(child.name);
-
-        });
-        console.log(patient);
-        console.log(family);
-        res.render('dropdown.ejs', {
-            email: name,
-            patient:patient,
-            family:family
+//var ref=admin.database().ref();
+// var heartRate=[];
+var record = admin.database().ref('records/');
+// const promise=record.once('value',function (snap) {
+//     //console.log(snap.val())
+//     snap.forEach(function (childSnap) {
+//         childSnap.forEach(function (child_child_Snap) {
+//             var child = child_child_Snap.val();
+//             //console.log(child)
+//             heartRate.push((child))
+//         });
+//     });
+//     console.log(heartRate[0])
+// });
+var heartRate=[]
+record.once('value')
+    .then(snap=>{
+    snap.forEach(function (childSnap) {
+        childSnap.forEach(function (child_child_Snap) {
+            var child = child_child_Snap.val();
+            //console.log(child)
+            heartRate.push((child))
         });
     });
+}).then(snap=>{
+    console.log(heartRate[0])
+})
 
-});
+var patient=[];
+     var family=[];
+// messagesRef.once('value')
+//     .then(snap=>{
+//     return snap.forEach(function (childSnap) {
+//         console.log(childSnap.child("userType").val());
+//             var userType=childSnap.child("userType").val();
+//             var child=childSnap.val();
+//             if(userType=="PATIENT")
+//                 patient.push(child.name);
+//             else if(userType=="FAMILY")
+//                 family.push(child.name);
+//     })
+// }).then(snap=>{
+//     console.log(patient);
+//          console.log(family);
+// })
+//  messagesRef.orderByChild("email").equalTo('s@s.com').on("child_added",function (snap) {
+// }).then(snap=>{
+//     console.log(snap.key)
+//  })
+// messagesRef.orderByChild("email").equalTo('s@s.com').on("child_added",function (snap) {
+//     console.log(snap.key);
+//
+//     name = snap.child('name').val();
+//     console.log(name);
+//     var patient=[];
+//     var family=[];
+//     messagesRef.once('value')
+//     .then(function (snap) {
+//         snap.forEach(function (childSnap) {
+//             console.log(childSnap.child("userType").val());
+//             var userType=childSnap.child("userType").val();
+//             var child=childSnap.val();
+//             if(userType=="PATIENT")
+//                 patient.push(child.name);
+//             else if(userType=="FAMILY")
+//                 family.push(child.name);
+//
+//         });
+//         console.log(patient);
+//         console.log(family);
+//         res.render('dropdown.ejs', {
+//             email: name,
+//             patient:patient,
+//             family:family
+//         });
+//     });
+//
+// });
 
 
-
+//
 // var postData=
 //     {
 //     age: "40",
@@ -52,12 +99,12 @@ messagesRef.orderByChild("email").equalTo('s@s.com').on("child_added",function (
 //     emergNum: "",
 //     familyId: "",
 //     locationAddress: "",
-//     name: "shuai2",
+//     name: "shuai",
 //     patientId: "",
 //     physicianId: "",
 //     admin:"false",
 //     userId: "",
-//     userType: "FAMILY",
+//     userType: "PATIENT",
 // };
 // var newPostKey = messagesRef.push().key;
 // var updates = {};
