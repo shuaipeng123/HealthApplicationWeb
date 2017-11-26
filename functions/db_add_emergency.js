@@ -7,7 +7,7 @@ var config = {
 firebase.initializeApp(config);
 var postData = {
     emergency: "true",
-    userid:123,
+    userid:789,
 
 };
 
@@ -20,3 +20,6 @@ updates['/emergency/'+newPostKey] = postData;
 
 
 firebase.database().ref().update(updates);
+
+var removeKey=firebase.database().ref().child('emergency/newPostKey')
+removeKey.remove()

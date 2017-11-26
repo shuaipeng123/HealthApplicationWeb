@@ -21,7 +21,7 @@ License: You must have a valid license purchased only from themeforest(the above
 
     <head>
         <meta charset="utf-8" />
-        <title>Remote health monitoring system</title>
+        <title>Date mining system</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta content="width=device-width, initial-scale=1" name="viewport" />
         <meta content="Preview page of Metronic Admin Theme #2 for " name="description" />
@@ -47,7 +47,6 @@ License: You must have a valid license purchased only from themeforest(the above
         <!-- BEGIN THEME LAYOUT STYLES -->
         <!-- END THEME LAYOUT STYLES -->
         <link rel="shortcut icon" href="favicon.ico" />
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script src="https://www.gstatic.com/firebasejs/3.1.0/firebase.js"></script>
 
     </head>
@@ -63,9 +62,9 @@ License: You must have a valid license purchased only from themeforest(the above
                 </div>
                 <div class="col-md-6 login-container bs-reset mt-login-5-bsfix">
                     <div class="login-content">
-                        <h1>Remote health monitoring system</h1>
-                        <p> This remote health monitoring system can help you be closer to patient.</p>
-                        <form action="/index" class="login-form" method="post" id="logInForm">
+                        <h1>Data mining system Login</h1>
+                        <p> This data mining system can help your solve a lot of analysing problem.</p>
+                        <form action="dropdown.html" class="login-form" method="post">
                             <div class="alert alert-danger display-hide">
                                 <button class="close" data-close="alert"></button>
                                 <span>Enter any username and password. </span>
@@ -87,26 +86,26 @@ License: You must have a valid license purchased only from themeforest(the above
                                 </div>
                                 <div class="col-sm-8 text-right">
                                     <div class="forgot-password">
-                                        <a id="forget-password" class="forget-password">Sign Up</a>
+                                        <a href="javascript:;" id="forget-password" class="forget-password">Sign Up</a>
                                     </div>
-                                    <button id="btnLogout" class="btn green" type="button">Log Out</button>
-                                    <button id="btnLogin" class="btn green" type="button">Log In</button>
+
+                                    <button id="btnLogin" class="btn green" type="submit">Log In</button>
                                 </div>
                             </div>
                         </form>
                         <!-- BEGIN FORGOT PASSWORD FORM -->
-                        <form id="signUpForm" class="forget-form" action="/index" method="post">
+                        <form class="forget-form" action="/index" method="post">
                             <h3 class="font-green">Sign Up As a Physican</h3>
 
                             <div class="form-group">
-                                <input class="form-control placeholder-no-fix form-group" id="p_email" type="email" autocomplete="off" placeholder="txtEmail" name="email" />
-                                <input class="form-control placeholder-no-fix form-group" id="p_password" type="password" autocomplete="off" placeholder="Password" name="password" />
-                                <input class="form-control placeholder-no-fix form-group" id="p_username" type="text" autocomplete="off" placeholder="username" name="username" />
-                                <input class="form-control placeholder-no-fix form-group" id="p_subject" type="text" autocomplete="off" placeholder="subject" name="subject" />
+                                <input class="form-control placeholder-no-fix form-group" type="email" autocomplete="off" placeholder="txtEmail" name="email" />
+                                <input class="form-control placeholder-no-fix form-group" type="password" autocomplete="off" placeholder="Password" name="password" />
+                                <input class="form-control placeholder-no-fix form-group" type="text" autocomplete="off" placeholder="username" name="username" />
+                                <input class="form-control placeholder-no-fix form-group" type="text" autocomplete="off" placeholder="subject" name="subject" />
                             </div>
                             <div class="form-actions">
                                 <button type="button" id="back-btn" class="btn green btn-outline">Back</button>
-                                <button id="btnSignUp" type="button" class="btn btn-success uppercase pull-right">Submit</button>
+                                <button id="btnSignUp" type="submit" class="btn btn-success uppercase pull-right">Submit</button>
                             </div>
                         </form>
                         <!-- END FORGOT PASSWORD FORM -->
@@ -184,71 +183,37 @@ License: You must have a valid license purchased only from themeforest(the above
                 const btnLogin=document.getElementById('btnLogin');
                 const btnSignup=document.getElementById('btnSignUp');
                 const btnLogout=document.getElementById('btnLogout');
-                const p_email=document.getElementById('p_email');
-                const p_password=document.getElementById('p_password');
                 btnLogin.addEventListener('click',e=>{
                     const email=txtEmail.value;
                 console.log(email);
                 const pass=txtPassword.value;
                 const auth=firebase.auth();
-                const promise=auth.signInWithEmailAndPassword(email,pass);
-                promise.catch(e=>console.log(e.message));
+                auth.setPersistence(firebase.auth.Auth.Persistence.SESSION)
+                    .then(function() {
+                        // Existing and future Auth states are now persisted in the current
+                        // session only. Closing the window would clear any existing state even
+                        // if a user forgets to sign out.
+                        // ...
+                        // New sign-in will be persisted with session persistence.
+                        return firebase.auth().signInWithEmailAndPassword(email, password);
+                    })
+                    .catch(function(error) {
+                        // Handle Errors here.
+                        var errorCode = error.code;
+                        var errorMessage = error.message;
+                    });
 
             });
                 btnSignup.addEventListener('click',e=>{
-                    const email=p_email.value;
-                console.log(email);
-                const pass=p_password.value;
+                    const email=txtEmail.value;
+                //console.log(email);
+                const pass=txtPassword.value;
                 const auth=firebase.auth();
                 const promise=auth.createUserWithEmailAndPassword(email,pass);
-                promise.catch(e=>console.log(e.message));
+                promise.then(snap=>{
 
-            });
-                btnLogout.addEventListener('click',e=>{
-                    firebase.auth().signOut();
-            });
-                var postData;
+                }).catch(e=>console.log(e.message));
 
-                firebase.auth().onAuthStateChanged(firebaseUser=>{
-                    if(firebaseUser){
-                        var uid=firebaseUser.uid
-
-
-                        postData = {
-                            age:"",
-                            userType:"PHYSICIAN",
-                            userId:uid,
-                            patients:"",
-                            name:"",
-                            subject:"",
-                            email: firebaseUser.email,
-
-                        };
-                        console.log(postData)
-                        // Get a key for a new Post.
-                        firebase.database().ref().child('users').once('value', function(snapshot) {
-                            if (snapshot.hasChild(uid)) {
-                              // alert('has a user');
-                                document.getElementById("logInForm").submit();
-                            }
-                            else{
-                                var updates = {};
-                                updates['/users/' + uid] = postData;
-                                console.log(updates)
-
-                                firebase.database().ref().update(updates).then(e=>{
-                                   document.getElementById("signUpForm").submit();
-                                })
-                                    .catch(e=>console.log(e.message));
-                            }
-                        });
-
-
-                        // Write the new post's data simultaneously in the posts list and the user's post list.
-
-                    }else{
-                        console.log("not logged in")
-                }
             });
             }());
         </script>

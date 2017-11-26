@@ -21,7 +21,7 @@ License: You must have a valid license purchased only from themeforest(the above
 
 <head>
     <meta charset="utf-8">
-    <title>Metronic Admin Theme #2 | Bootstrap Select</title>
+    <title>Remote health monitoring</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content="width=device-width, initial-scale=1" name="viewport">
     <meta content="Preview page of Metronic Admin Theme #2 for bootstrap select with multiple select, live search and more" name="description">
@@ -70,7 +70,7 @@ License: You must have a valid license purchased only from themeforest(the above
         <!-- BEGIN LOGO -->
         <div class="page-logo">
             <a href="index.html">
-                <img src="../assets/layouts/layout2/img/logo-default.png" alt="logo" class="logo-default" /> </a>
+                <img src="" alt="logo" class="logo-default" /> </a>
             <div class="menu-toggler sidebar-toggler">
                 <!-- DOC: Remove the above "hide" to enable the sidebar toggler button on header -->
             </div>
@@ -102,13 +102,13 @@ License: You must have a valid license purchased only from themeforest(the above
                     <li class="dropdown dropdown-user">
                         <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                             <img alt="" class="img-circle" src="../assets/layouts/layout2/img/avatar3_small.jpg" />
-                            <span class="username username-hide-on-mobile"> <%= ((email != null) ? email : '') %> </span>
+                            <span class="username username-hide-on-mobile"> <%= ((name != null) ? name : '') %> </span>
                             <i class="fa fa-angle-down"></i>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-default">
 
                             <li>
-                                <a href="page_user_login_1.html">
+                                <a href="/">
                                     <i class="icon-key"></i> Log Out </a>
                             </li>
                         </ul>
@@ -149,8 +149,8 @@ License: You must have a valid license purchased only from themeforest(the above
             <!-- BEGIN THEME PANEL -->
 
             <!-- END THEME PANEL -->
-            <h1 class="page-title"> Bootstrap Select
-                <small>bootstrap select with multiple select, live search and more</small>
+            <h1 class="page-title"> Pair patient and family
+                <small>Please select one patient and one family member</small>
             </h1>
 
             <!-- END PAGE HEADER-->
@@ -164,16 +164,16 @@ License: You must have a valid license purchased only from themeforest(the above
                             <!-- BEGIN FORM-->
                             <form action="/pair" class="form-horizontal form-row-seperated" method="post">
                                 <div class="form-body">
-                                    <input class="form-control placeholder-no-fix form-group" style="display:none;" type="text" autocomplete="off" placeholder="txtEmail"  name="email" value="<%= ((email != null) ? email : '') %>"/>
+                                    <input class="form-control placeholder-no-fix form-group" style="display:none;" type="text" autocomplete="off" placeholder="txtEmail"  name="email" value="<%= ((name != null) ? name : '') %>"/>
 
                                     <div class="form-group">
-                                        <label class="control-label col-md-3">Bootstrap Styles</label>
+                                        <label class="control-label col-md-3">family member</label>
                                         <div class="col-md-9">
                                             <div class="margin-bottom-10">
                                                 <select class="bs-select form-control input-small" data-style="btn-primary" id="family" name="family">
                                                     <% for(var i = 0;i < family.length;i++){ %>
                                                     <% if (family != null){ %>
-                                                    <option value="<%= family[i] %>"><%= family[i] %></option>
+                                                    <option value="<%= family_id[i] %>"><%= family[i] %></option>
 
                                                     <%}%>
                                                     <%}%>
@@ -184,14 +184,14 @@ License: You must have a valid license purchased only from themeforest(the above
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label col-md-3">Bootstrap Styles</label>
+                                        <label class="control-label col-md-3">patients</label>
                                         <div class="col-md-9">
                                             <div class="margin-bottom-10">
 
                                                 <select class="bs-select form-control input-small" data-style="btn-success" id="patient" name="patient">
                                                     <% for(var i = 0;i < patient.length;i++){ %>
                                                     <% if (family != null){ %>
-                                                    <option value="<%= patient[i] %>"><%= patient[i] %></option>
+                                                    <option value="<%= patient_id[i] %>"><%= patient[i] %></option>
 
                                                     <%}%>
                                                     <%}%>
@@ -793,13 +793,7 @@ License: You must have a valid license purchased only from themeforest(the above
 <!-- END CONTAINER -->
 <!-- BEGIN FOOTER -->
 <div class="page-footer">
-    <div class="page-footer-inner"> 2016 &copy; Metronic Theme By
-        <a target="_blank" href="http://keenthemes.com">Keenthemes</a> &nbsp;|&nbsp;
-        <a href="http://themeforest.net/item/metronic-responsive-admin-dashboard-template/4021469?ref=keenthemes" title="Purchase Metronic just for 27$ and get lifetime updates for free" target="_blank">Purchase Metronic!</a>
-        <div class="scroll-to-top">
-            <i class="icon-arrow-up"></i>
-        </div>
-    </div>
+
     <!-- END FOOTER -->
     <!-- BEGIN QUICK NAV -->
 
@@ -845,6 +839,7 @@ License: You must have a valid license purchased only from themeforest(the above
             storageBucket: "remote-health-monitoring.appspot.com",
         };
         firebase.initializeApp(config);
+
         var emergency_h1=document.getElementById('emergencyHeader');
         var emergency = firebase.database().ref('emergency/');
         emergency.on('value',function (snap) {
@@ -853,13 +848,31 @@ License: You must have a valid license purchased only from themeforest(the above
 
                 console.log(child)
                 console.log(emergency_h1)
-                emergency_h1.innerHTML=child.userid;
+                if(child.userid!='123')
+                    emergency_h1.innerHTML=child.userid;
             });
         });
 
         function change_emergency() {
-            var emergency_h1=document.getElementById('emergencyHeader');
-            emergency_h1.innerHTML="";
+
+
+            emergency.on('value',function (snap) {
+                snap.forEach(function (childSnap) {
+                    var child = childSnap.val();
+                    var emergency_h1=document.getElementById('emergencyHeader');
+                    console.log(childSnap.key)
+                    console.log(emergency_h1.innerHTML)
+                    console.log(child.userid)
+                    if(child.userid==emergency_h1.innerHTML)
+                    {
+                        var newPostKey=childSnap.key
+                        var removeKey=firebase.database().ref().child('emergency/'+newPostKey)
+                        removeKey.remove()
+                        emergency_h1.innerHTML="";
+                    }
+                });
+            });
+
 
         }
 

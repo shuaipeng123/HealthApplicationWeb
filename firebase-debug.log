@@ -1,108 +1,39 @@
-[debug] [2017-11-24T05:12:23.515Z] ----------------------------------------------------------------------
-[debug] [2017-11-24T05:12:23.516Z] Command:       /usr/local/bin/node /usr/local/bin/firebase deploy
-[debug] [2017-11-24T05:12:23.517Z] CLI Version:   3.15.2
-[debug] [2017-11-24T05:12:23.517Z] Platform:      darwin
-[debug] [2017-11-24T05:12:23.517Z] Node Version:  v8.9.1
-[debug] [2017-11-24T05:12:23.517Z] Time:          Fri Nov 24 2017 00:12:23 GMT-0500 (EST)
-[debug] [2017-11-24T05:12:23.517Z] ----------------------------------------------------------------------
+[debug] [2017-11-26T05:02:17.495Z] ----------------------------------------------------------------------
+[debug] [2017-11-26T05:02:17.497Z] Command:       /usr/local/bin/node /usr/local/bin/firebase serve --only functions,hosting
+[debug] [2017-11-26T05:02:17.497Z] CLI Version:   3.15.2
+[debug] [2017-11-26T05:02:17.497Z] Platform:      darwin
+[debug] [2017-11-26T05:02:17.497Z] Node Version:  v8.9.1
+[debug] [2017-11-26T05:02:17.498Z] Time:          Sun Nov 26 2017 00:02:17 GMT-0500 (EST)
+[debug] [2017-11-26T05:02:17.498Z] ----------------------------------------------------------------------
 [debug] 
-[debug] [2017-11-24T05:12:23.527Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
-[debug] [2017-11-24T05:12:23.528Z] > authorizing via signed-in user
-[debug] [2017-11-24T05:12:23.530Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/remote-health-monitoring  
- Fri Nov 24 2017 00:12:23 GMT-0500 (EST)
-[debug] [2017-11-24T05:12:23.908Z] <<< HTTP RESPONSE 200
-[debug] [2017-11-24T05:12:23.909Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/remote-health-monitoring/tokens  
- Fri Nov 24 2017 00:12:23 GMT-0500 (EST)
-[debug] [2017-11-24T05:12:24.272Z] <<< HTTP RESPONSE 200
+[debug] [2017-11-26T05:02:17.508Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2017-11-26T05:02:17.508Z] > authorizing via signed-in user
+[debug] [2017-11-26T05:02:17.510Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/remote-health-monitoring  
+ Sun Nov 26 2017 00:02:17 GMT-0500 (EST)
+[debug] [2017-11-26T05:02:17.931Z] <<< HTTP RESPONSE 200
+[debug] [2017-11-26T05:02:17.932Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/remote-health-monitoring/tokens  
+ Sun Nov 26 2017 00:02:17 GMT-0500 (EST)
+[debug] [2017-11-26T05:02:18.477Z] <<< HTTP RESPONSE 200
 [info] 
-[info] === Deploying to 'remote-health-monitoring'...
+[info] === Serving from '/Users/Kyle/Desktop/firebase-web'...
 [info] 
-[info] i  deploying functions, hosting
-[debug] [2017-11-24T05:12:24.921Z] > [functions] package.json contents: {
-  "name": "functions",
-  "description": "Cloud Functions for Firebase",
-  "scripts": {
-    "serve": "firebase serve --only functions",
-    "shell": "firebase experimental:functions:shell",
-    "start": "npm run shell",
-    "deploy": "firebase deploy --only functions",
-    "logs": "firebase functions:log"
-  },
-  "dependencies": {
-    "consolidate": "^0.15.0",
-    "ejs": "^2.5.7",
-    "express": "^4.16.2",
-    "firebase-admin": "~5.4.2",
-    "firebase-functions": "^0.7.1"
-  },
-  "private": true
-}
-[info] i  functions: ensuring necessary APIs are enabled...
-[info] i  runtimeconfig: ensuring necessary APIs are enabled...
-[debug] [2017-11-24T05:12:24.922Z] >>> HTTP REQUEST GET https://servicemanagement.googleapis.com/v1/services/cloudfunctions.googleapis.com/projectSettings/remote-health-monitoring?view=CONSUMER_VIEW  
- Fri Nov 24 2017 00:12:24 GMT-0500 (EST)
-[debug] [2017-11-24T05:12:24.922Z] >>> HTTP REQUEST GET https://servicemanagement.googleapis.com/v1/services/runtimeconfig.googleapis.com/projectSettings/remote-health-monitoring?view=CONSUMER_VIEW  
- Fri Nov 24 2017 00:12:24 GMT-0500 (EST)
-[debug] [2017-11-24T05:12:25.419Z] <<< HTTP RESPONSE 200
-[info] ✔  runtimeconfig: all necessary APIs are enabled
-[debug] [2017-11-24T05:12:25.426Z] <<< HTTP RESPONSE 200
-[info] ✔  functions: all necessary APIs are enabled
-[debug] [2017-11-24T05:12:25.427Z] >>> HTTP REQUEST GET https://appengine.googleapis.com/v1/apps/remote-health-monitoring  
- Fri Nov 24 2017 00:12:25 GMT-0500 (EST)
-[debug] [2017-11-24T05:12:25.427Z] >>> HTTP REQUEST GET https://apikeys.googleapis.com/v1/projects/remote-health-monitoring/apiKeys  
- Fri Nov 24 2017 00:12:25 GMT-0500 (EST)
-[debug] [2017-11-24T05:12:25.761Z] <<< HTTP RESPONSE 200
-[debug] [2017-11-24T05:12:25.787Z] <<< HTTP RESPONSE 200
-[info] i  functions: preparing functions directory for uploading...
-[debug] [2017-11-24T05:12:29.503Z] >>> HTTP REQUEST GET https://runtimeconfig.googleapis.com/v1beta1/projects/remote-health-monitoring/configs  
- Fri Nov 24 2017 00:12:29 GMT-0500 (EST)
-[debug] [2017-11-24T05:12:29.738Z] <<< HTTP RESPONSE 200
-[info] i  functions: packaged functions (53.87 KB) for uploading
-[debug] [2017-11-24T05:12:32.701Z] >>> HTTP REQUEST GET https://www.googleapis.com/storage/v1/b/staging.remote-health-monitoring.appspot.com  
- Fri Nov 24 2017 00:12:32 GMT-0500 (EST)
-[debug] [2017-11-24T05:12:32.927Z] <<< HTTP RESPONSE 200
-[debug] [2017-11-24T05:12:32.928Z] >>> HTTP REQUEST POST https://www.googleapis.com/upload/storage/v1/b/staging.remote-health-monitoring.appspot.com/o?uploadType=media&name=firebase-functions-source ReadStream {
-  _readableState: 
-   ReadableState {
-     objectMode: false,
-     highWaterMark: 65536,
-     buffer: BufferList { head: [Object], tail: [Object], length: 1 },
-     length: 55159,
-     pipes: null,
-     pipesCount: 0,
-     flowing: null,
-     ended: true,
-     endEmitted: false,
-     reading: false,
-     sync: false,
-     needReadable: false,
-     emittedReadable: true,
-     readableListening: false,
-     resumeScheduled: false,
-     destroyed: false,
-     defaultEncoding: 'utf8',
-     awaitDrain: 0,
-     readingMore: false,
-     decoder: null,
-     encoding: null },
-  readable: true,
-  domain: null,
-  _events: { end: [Function] },
-  _eventsCount: 1,
-  _maxListeners: undefined,
-  path: '/var/folders/wy/0svcn8y56lg0pl8h0303797w0000gn/T/firebase-functions-74053AjzSL15a3BD.zip',
-  fd: 19,
-  flags: 'r',
-  mode: 438,
-  start: undefined,
-  end: undefined,
-  autoClose: true,
-  pos: undefined,
-  bytesRead: 55159 } 
- Fri Nov 24 2017 00:12:32 GMT-0500 (EST)
-[debug] [2017-11-24T05:12:33.529Z] <<< HTTP RESPONSE 200
-[info] ✔  functions: functions folder uploaded successfully
-[info] i  hosting: preparing public directory for upload...
-[warn] ⚠  Warning: Public directory does not contain index.html
-[debug] [2017-11-24T05:12:46.538Z] >>> HTTP REQUEST PUT https://deploy.firebase.com/v1/hosting/remote-health-monitoring/uploads/-KzgRE5e7VetMPFm5urE?fileCount=5584&message=  
- Fri Nov 24 2017 00:12:46 GMT-0500 (EST)
+[info] i  functions: Preparing to emulate functions.
+[debug] [2017-11-26T05:02:18.714Z] >>> HTTP REQUEST GET https://appengine.googleapis.com/v1/apps/remote-health-monitoring  
+ Sun Nov 26 2017 00:02:18 GMT-0500 (EST)
+[debug] [2017-11-26T05:02:18.714Z] >>> HTTP REQUEST GET https://apikeys.googleapis.com/v1/projects/remote-health-monitoring/apiKeys  
+ Sun Nov 26 2017 00:02:18 GMT-0500 (EST)
+[debug] [2017-11-26T05:02:18.715Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/remote-health-monitoring  
+ Sun Nov 26 2017 00:02:18 GMT-0500 (EST)
+[debug] [2017-11-26T05:02:19.022Z] <<< HTTP RESPONSE 200
+[debug] [2017-11-26T05:02:19.100Z] <<< HTTP RESPONSE 200
+[debug] [2017-11-26T05:02:19.101Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/163149250970/clients/_:getWebAppConfig  
+ Sun Nov 26 2017 00:02:19 GMT-0500 (EST)
+[debug] [2017-11-26T05:02:19.109Z] <<< HTTP RESPONSE 200
+[debug] [2017-11-26T05:02:19.376Z] <<< HTTP RESPONSE 200
+[info] i  hosting: Serving hosting files from: public
+[info] ✔  hosting: Local server: http://localhost:5000
+
+[info] [hosting] Rewriting / to local function app
+[info] ✔  functions: app: http://localhost:5001/remote-health-monitoring/us-central1/app
+[info] [hosting] Rewriting /index to local function app
+[info] [hosting] Rewriting /index to local function app
